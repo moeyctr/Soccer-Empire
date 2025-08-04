@@ -40,9 +40,21 @@ header {
   50% {background-position: 100% 50%;}
   100% {background-position: 0% 50%;}
 }
-header h1 {
-  font-size: 2.5em;
-  text-shadow: 0 0 15px #f0c040, 0 0 30px #f0c040;
+.header-left {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+/* Store name next to logo */
+.store-title {
+  font-size: 2em;
+  font-weight: bold;
+  color: #f0c040;
+  text-shadow: 0 0 10px #f0c040;
 }
 nav {
   display: flex;
@@ -268,9 +280,12 @@ button:hover {
 </head>
 <body>
 
-<!-- Header -->
+<!-- Header with store name and logo -->
 <header>
-  <h1 style="font-size:2.5em;">⚽</h1>
+  <div class="header-left" style="display:flex; align-items:center;">
+    <img src="https://i.imgur.com/7XhU1i3.png" alt="Logo" class="logo" /> <!-- Replace with your logo URL -->
+    <div class="store-title">Soccer Empire</div>
+  </div>
   <nav>
     <a href="#home" onclick="showSection('home')">Home</a>
     <a href="#shop" onclick="showSection('shop')">Shop</a>
@@ -279,7 +294,7 @@ button:hover {
   </nav>
 </header>
 
-<!-- Home -->
+<!-- Sections -->
 <section id="home" style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
   <h2>Welcome to Soccer Empire</h2>
   <div style="display:flex; flex-wrap:wrap; justify-content:center;">
@@ -313,7 +328,7 @@ button:hover {
   </form>
 </section>
 
-<!-- Checkout Form (hidden initially) -->
+<!-- Checkout Payment Modal -->
 <div id="checkoutFormContainer" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:1000;">
   <div style="background:#222; padding:20px; border-radius:10px; max-width:400px; width:90%; color:#fff;">
     <h2>Enter Payment Details</h2>
@@ -344,19 +359,11 @@ button:hover {
   // Cart data
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  // Sample products including your kits
+  // Products array with your store's products and kits
   const products = [
-    // Boots
+    // Example product
     { name: "Copa Mundial FG", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 120 },
-    { name: "F50 FG Radiant Blaze", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 150 },
-    { name: "Copa Pure 3 Laceless", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 140 },
-    { name: "Zoom Mercurial Vapor 16", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 170 },
-    { name: "Phantom GX 2 Elite", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 160 },
-    { name: "Copa Pure 3 Celestial", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 135 },
-    { name: "Phantom GX 2 LV8", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 165 },
-    { name: "Tiempo Legend 10", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 155 },
-
-    // Kits (your custom ones)
+    // Your kits
     { name: "FC Barcelona x Travis Scott Limited Edition Away Kit", image: "https://images.unsplash.com/photo-1649170524538-dbd7c7d1f1e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Kits", price: 90 },
     { name: "PSG Paris Noir Premium Kit", image: "https://images.unsplash.com/photo-1649170524538-dbd7c7d1f1e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Kits", price: 90 },
     { name: "Manchester United Force of Nature Premium Kit", image: "https://images.unsplash.com/photo-1649170524538-dbd7c7d1f1e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Kits", price: 90 },
@@ -435,9 +442,7 @@ button:hover {
 
   document.getElementById('paymentForm').addEventListener('submit', function(e){
     e.preventDefault();
-    // Here you could add validation or send data to server
     alert('Payment processed! Thank you for your purchase.');
-    // Clear cart
     cart = [];
     localStorage.removeItem('cart');
     showCart();
