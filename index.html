@@ -24,7 +24,7 @@ body {
 /* Header styling */
 header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(45deg, #0f2027, #203a43, #2c5364);
@@ -40,16 +40,16 @@ header {
   50% {background-position: 100% 50%;}
   100% {background-position: 0% 50%;}
 }
-.header-left {
+.header-top {
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
 }
 .logo {
   width: 50px;
   height: 50px;
   margin-right: 10px;
 }
-/* Store name next to logo */
 .store-title {
   font-size: 2em;
   font-weight: bold;
@@ -280,13 +280,13 @@ button:hover {
 </head>
 <body>
 
-<!-- Header with store name and logo -->
+<!-- Header with logo + store name -->
 <header>
-  <div class="header-left" style="display:flex; align-items:center;">
-    <img src="https://i.imgur.com/7XhU1i3.png" alt="Logo" class="logo" /> <!-- Replace with your logo URL -->
-    <div class="store-title">Soccer Empire</div>
+  <div class="header-top" style="display:flex; align-items:center; width:100%; justify-content:center;">
+    <img src="https://i.imgur.com/7XhU1i3.png" alt="Logo" class="logo" style="width:50px; height:50px; margin-right:10px;">
+    <div class="store-title" style="font-size:2em; font-weight:bold; color:#f0c040; text-shadow:0 0 10px #f0c040;">Soccer Empire</div>
   </div>
-  <nav>
+  <nav style="margin-top:10px;">
     <a href="#home" onclick="showSection('home')">Home</a>
     <a href="#shop" onclick="showSection('shop')">Shop</a>
     <a href="#cart" onclick="showSection('cart')">Cart</a>
@@ -356,13 +356,20 @@ button:hover {
     document.getElementById(id).style.display='block';
   }
 
-  // Cart data
+  // Cart array
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  // Products array with your store's products and kits
+  // Products list (with your store's kits)
   const products = [
-    // Example product
     { name: "Copa Mundial FG", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 120 },
+    { name: "F50 FG Radiant Blaze", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 150 },
+    { name: "Copa Pure 3 Laceless", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 140 },
+    { name: "Zoom Mercurial Vapor 16", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 170 },
+    { name: "Phantom GX 2 Elite", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 160 },
+    { name: "Copa Pure 3 Celestial", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 135 },
+    { name: "Phantom GX 2 LV8", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 165 },
+    { name: "Tiempo Legend 10", image: "https://images.unsplash.com/photo-1601144485461-5b8e6b8f2e4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Boots", price: 155 },
+
     // Your kits
     { name: "FC Barcelona x Travis Scott Limited Edition Away Kit", image: "https://images.unsplash.com/photo-1649170524538-dbd7c7d1f1e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Kits", price: 90 },
     { name: "PSG Paris Noir Premium Kit", image: "https://images.unsplash.com/photo-1649170524538-dbd7c7d1f1e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Kits", price: 90 },
@@ -377,7 +384,7 @@ button:hover {
     { name: "Japan Supra Special Kit", image: "https://images.unsplash.com/photo-1649170524538-dbd7c7d1f1e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", category: "Kits", price: 90 }
   ];
 
-  // Load products into shop page
+  // Load products on page load
   window.onload = () => {
     const container = document.getElementById('productGrid');
     products.forEach(p => {
